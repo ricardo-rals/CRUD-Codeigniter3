@@ -1,58 +1,66 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Games extends CI_Controller {	
-	public function index()
-	{
-		$this->load->model("GamesModel");
-		$data['games'] = $this->GamesModel->index();
-		$data['title'] = "Games - Codeigniter";
+class Games extends CI_Controller
+{
+// COM ESSE CONSTRUCT NÃO PRECISO FICAR CHAMANDO $this->load->model("GamesModel"); EM TODAS AS FUNÇÕES
+  public function __construct()
+  {
+    parent::__construct();
+    $this->load->model("GamesModel");
+  }
 
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/nav-top', $data);
-		$this->load->view('pages/games', $data);
-        $this->load->view('templates/footer', $data);
-        $this->load->view('templates/js', $data);
-	}
+  public function index()
+  {
+    $data['games'] = $this->GamesModel->index();
+    $data['title'] = "Games - Codeigniter";
 
-    public function new()
-    {
-        $data['title'] = "Games - Codeigniter";
+    $this->load->view('templates/header', $data);
+    $this->load->view('templates/nav-top', $data);
+    $this->load->view('pages/games', $data);
+    $this->load->view('templates/footer', $data);
+    $this->load->view('templates/js', $data);
+  }
 
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/nav-top', $data);
-		$this->load->view('pages/form-games', $data);
-        $this->load->view('templates/footer', $data);
-        $this->load->view('templates/js', $data);
-    }
+  public function new()
+  {
+    $data['title'] = "Games - Codeigniter";
+    $this->load->view('templates/header', $data);
+    $this->load->view('templates/nav-top', $data);
+    $this->load->view('pages/form-games', $data);
+    $this->load->view('templates/footer', $data);
+    $this->load->view('templates/js', $data);
+  }
 
-    public function store()
-    {
-        $game = $_POST;
-        $game["user_id"] = '1';
-        $this->load->model("GamesModel");
-        $this->GamesModel->store($game);
-        redirect("dashboard");
-    }
+  public function store()
+  {
+    $game = $_POST;
+    $game["user_id"] = '1';
+    $this->GamesModel->store($game);
+    redirect("dashboard");
+  }
 
-    public function edit($id)
-    {
-        $this->load->model("GamesModel");
-		$data['game'] = $this->GamesModel->show($id);
-		$data['title'] = "Editar Game - Codeigniter";
+  public function edit($id)
+  { 
+    $data['game'] = $this->GamesModel->show($id);
+    $data['title'] = "Editar Game - Codeigniter";
+    $this->load->view('templates/header', $data);
+    $this->load->view('templates/nav-top', $data);
+    $this->load->view('pages/form-games', $data);
+    $this->load->view('templates/footer', $data);
+    $this->load->view('templates/js', $data);
+  }
 
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/nav-top', $data);
-		$this->load->view('pages/form-games', $data);
-        $this->load->view('templates/footer', $data);
-        $this->load->view('templates/js', $data);
-    }
+  public function update($id)
+  {
+    $game = $_POST;
+    $this->GamesModel->update($id, $game);
+    redirect("games");
+  }
 
-    public function update($id)
-    {
-      $this->load->model("GamesModel");
-      $game = $_POST;
-      $this->GamesModel->update($id, $game);
-      redirect("games");
-    }
+  public function delete($id)
+  {
+    $this->GamesModel->destroy($id);
+    redirect("games");
+  }
 }

@@ -32,9 +32,14 @@
                   Edit
                 </i>
               </a>
-              <a href="<?= base_url() ?>games/delete/<?= $game['id'] ?>" class="btn btn-sm btn-danger">
+              <!-- <a href="<?= base_url() ?>games/delete/<?= $game['id'] ?>" class="btn btn-sm btn-danger">
                 <i class="fas fa-trash-alt">
-                  Edit
+                  Delete
+                </i>
+              </a> -->
+              <a href="javascript:goDelete(<?= $game['id'] ?>)" class="btn btn-sm btn-danger">
+                <i class="fas fa-trash-alt">
+                  Delete
                 </i>
               </a>
             </td>
@@ -44,3 +49,16 @@
     </table>
   </div>
 </main>
+
+<!-- COLOCAR ESSA PARTE EM OUTRO ARQUIVO -->
+<script>
+  function goDelete(id) {
+    const myUrl = 'games/delete/'+id
+    if(confirm("Deseja realmente apagar este registro?")) {
+      window.location.href = myUrl
+    } else {
+      alert("Registro não alterado")
+      return false
+    }
+  }
+</script>
