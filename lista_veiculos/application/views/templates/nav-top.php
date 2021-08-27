@@ -24,25 +24,25 @@
         </h6>
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="<?= base_url('')?>dashboard">
               <span data-feather="file"></span>
               Dashboard
             </a>
           </li>
 					<li class="nav-item">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="<?= base_url('')?>games">
               <span data-feather="file"></span>
               Games
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="#">
               <span data-feather="shopping-cart"></span>
               Users
             </a>
 					</li>
 					<li class="nav-item">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="#">
               <span data-feather="shopping-cart"></span>
               My Games
             </a>
