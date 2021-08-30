@@ -1,33 +1,65 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Veiculos extends CI_Controller {
-	public function index()
-	{
-        $texto = "Você está usando o controller Veiculos";
-        $dados = array("mensagem" => $texto);
-		$this->load->view("veiculos/lista", $dados);
-	}
+class Veiculos extends CI_Controller
+{
+  public function __construct()
+  {
+    parent::__construct();
+    permission();
+    $this->load->model("VeiculosModel");
+  }
 
-    public function listar_array()
-    {
-        $this->load->model("VeiculosModel","veiculos");
+  public function index()
+  {
+    $data['veiculos'] = $this->VeiculosModel->index();
+    $data['title'] = "Veiculos - Codeigniter";
 
-        $resultado = $this->veiculos->listar_todos();
+    $this->load->view('templates/header', $data);
+    $this->load->view('templates/nav-top', $data);
+    $this->load->view('pages/veiculos', $data);
+    $this->load->view('templates/footer', $data);
+    $this->load->view('templates/js', $data);
+  }
 
-        echo '<pre>';
+  public function new()
+  {
+    $data['title'] = "Veiculos - Codeigniter";
+    $this->load->view('templates/header', $data);
+    $this->load->view('templates/nav-top', $data);
+    $this->load->view('pages/form-veiculos', $data);
+    $this->load->view('templates/footer', $data);
+    $this->load->view('templates/js', $data);
+  }
 
-        var_dump($resultado);
-    }
+  public function store()
+  {
+    $veiculo = $_POST;
+    $this->VeiculosModel->store($veiculo);
+    redirect("dashboard");
+  }
 
-    public function listar_tabela()
-    {
-        $this->load->model("VeiculosModel","veiculos");
+  public function edit($id)
+  {
+    $data['veiculo'] = $this->VeiculosModel->show($id);
+    $data['title'] = "Editar Veiculo - Codeigniter";
+    $this->load->view('templates/header', $data);
+    $this->load->view('templates/nav-top', $data);
+    $this->load->view('pages/form-veiculos', $data);
+    $this->load->view('templates/footer', $data);
+    $this->load->view('templates/js', $data);
+  }
 
-        $resultado = $this->veiculos->listar_todos();
+  public function update($id)
+  {
+    $veiculo = $_POST;
+    $this->VeiculosModel->update($id, $veiculo);
+    redirect("veiculos");
+  }
 
-        $dados = array("veiculos" => $resultado);
-
-        $this->load->view("veiculos/lista_tabela", $dados);
-    }
+  public function delete($id)
+  {
+    $this->VeiculosModel->destroy($id);
+    redirect("dashboard");
+  }
 }

@@ -3,13 +3,13 @@
           <h1 class="h2">Dashboard</h1>
           <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group mr-2">
-              <a href="" class="btn btn-sm btn-outline-secondary"><i class="fas fa-plus-square"></i> Game</a>
+              <a href="<?= base_url() ?>veiculos/new" class="btn btn-sm btn-outline-secondary"><i class="fas fa-plus-square"></i> Veiculo</a>
             </div>
           </div>
         </div>
 
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-          <h2 class="h2">Last 5 Games</h2>
+          <h2 class="h2">Ultimos 5 Veiculos</h2>
         </div>
 
         <div class="table-responsive">
@@ -17,45 +17,44 @@
             <thead>
               <tr>
                 <th>#</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Developer</th>
-                <th>Release Date</th>
+                <th>Placa</th>
+                <th>Cor</th>
+                <th>Modelo</th>
+                <th>Chassi</th>
+                <th>Ano</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-            <?php foreach($games as $game) : ?>
+              <?php foreach ($veiculos as $veiculo) : ?>
                 <tr>
-                  <td><?= $game['id'] ?></td>
-                  <td><?= $game['name'] ?></td>
-                  <td><?= $game['price'] ?></td>
-                  <td><?= $game['developer'] ?></td>
-                  <td><?= $game['release_date'] ?></td>
-                  <td>xxx</td>
+                  <td><?= $veiculo['id'] ?></td>
+                  <td><?= $veiculo['placa'] ?></td>
+                  <td><?= $veiculo['cor'] ?></td>
+                  <td><?= $veiculo['modelo'] ?></td>
+                  <td><?= $veiculo['chassi'] ?></td>
+                  <td><?= $veiculo['ano'] ?></td>
+                  <td>
+                    <a href="<?= base_url() ?>games/edit/<?= $veiculo["id"] ?>" class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                    <a href="javascript:goDelete(<?= $veiculo['id'] ?>)" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></a>
+                  </td>
                 </tr>
-              <?php endforeach;?>
+              <?php endforeach; ?>
             </tbody>
           </table>
         </div>
-
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-          <h2 class="h2">Last 5 Users</h2>
-        </div>
-
-        <div class="table-responsive">
-          <table class="table table-bordered table-hover">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Country</th>
-              </tr>
-            </thead>
-            <tbody>
-              
-            </tbody>
-          </table>
+        </table>
         </div>
       </main>
+
+      <script>
+        function goDelete(id) {
+          var myUrl = 'games/edit/' + id;
+          if (confirm("Deseja apagar este registro?")) {
+            window.location.href = 'games/destroy/' + id;
+          } else {
+            alert("Registro não alterado");
+            return false;
+          }
+        }
+      </script>
